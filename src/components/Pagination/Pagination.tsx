@@ -5,12 +5,11 @@ import css from "./Pagination.module.css";
 
 type ModuleWithDefault<T> = { default: T };
 
-const ReactPaginate = ReactPaginateModule as unknown as
-  | ModuleWithDefault<ComponentType<ReactPaginateProps>>
-  | ComponentType<ReactPaginateProps>;
-
-const ReactPaginateComponent =
-  "default" in ReactPaginate ? ReactPaginate.default : ReactPaginate;
+const ReactPaginate = (
+  ReactPaginateModule as unknown as ModuleWithDefault<
+    ComponentType<ReactPaginateProps>
+  >
+).default;
 
 interface PaginationProps {
   pageCount: number;
@@ -24,7 +23,7 @@ const Pagination = ({
   onPageChange,
 }: PaginationProps) => {
   return (
-    <ReactPaginateComponent
+    <ReactPaginate
       pageCount={pageCount}
       forcePage={currentPage - 1}
       onPageChange={({ selected }) => onPageChange(selected + 1)}
